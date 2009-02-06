@@ -38,47 +38,51 @@
     </div>
 
     <div id="content">
-      <h4>1. Install libapreq</h4>
-      ModPorter uses libapreq for parsing the multipart request.
+      <h2>Configure ModPorter w/Apache</h2>
+      <p>The following are ModPorter's Apache configuration options suitable inside the application's <strong>VirtualHost</strong> directive.</p>
+
+      <strong><i>Required Configuration</i></strong>
       <ul>
-        <li>Download libapreq 2.10 RC1 from <a href="http://people.apache.org/~bojan/libapreq2-2.10-RC1.tar.gz">here</a>.</li>
-        <li>Install the C API :
-          <pre>
-            <code>
-  % ./configure --with-apache2-apxs=/path/to/apache2/bin/apxs
-  % make
-  % make test
-  % make install
-            </code>
-          </pre>
+        <li>
+          <h3>Porter &lt;on|off&gt;</h3>
+          <p>Default : <i>off</i></p>
+          <p>Enable or Disable ModPorter.</p>
+        </li>
+
+        <li>
+          <h3>PorterSharedSecret &lt;string&gt;</h3>
+          <p>A secret phrase used for signing the parsed parameters' header containing the information about uploaded files. <strong><i>PorterSharedSecret</i></strong> is essential for ensuring a secure transaction between your application and ModPorter.</p>
         </li>
       </ul>
 
-      <h4>2. Install ModPorter</h4>
-      <ul>
-        <li>Download the latest version of ModPorter from <a href="">here</a>.</li>
-        <li>Install using the rake command :
-          <pre>
-            <code>
-  % rake
-            </code>
-          </pre>
-        </li>
-        <li><a href="configure.html">Configure</a> ModPorter.</li>
-      </ul>
+      <strong><i>Optional Configuration</i></strong>
 
-      <h4>3. Install the Rails Plugin - acts_as_porter ( optional )</h4>
-      This step applies only if you wish to use ModPorter with a Rails application.
       <ul>
-        <li>Install using the plugin using script/plugin inside your Rails application :
-          <pre>
-            <code>
-  % script/plugin install git://acts_as_porter.git
-            </code>
-          </pre>
+        <li>
+          <h3>PorterMinSize  &lt;file size&gt;</h3>
+          <p>Default : <i>0</i></p>
+          <p>Possible Values :
+            <ul>
+              <li>10M</li>
+              <li>2048K</li>
+              <li>1G</li>
+            </ul>
+          </p>
+          <p>If the total size of uploaded data is less than <strong><i>PorterMinSize</i></strong>, ModPorter will bypass parsing the multipart data.</p>
+        </li>
+
+        <li>
+          <h3>PorterPermission &lt;file permission hash&gt;</h3>
+          <p>Default : <i>0x0666</i></p>
+          <p>Possible Values :
+            <ul>
+              <li>0x0006</li>
+              <li>0x0777</li>
+            </ul>
+          </p>
+          <p><strong><i>PorterPermission</i></strong> determines the default file permission of the temporary files created by ModPorter.</p>
         </li>
       </ul>
-      
     </div>
   </div>
 
