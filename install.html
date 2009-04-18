@@ -35,16 +35,23 @@
 
     <div id="content">
       <h4>1. Install libapreq</h4>
-      ModPorter uses libapreq for parsing the multipart request.
+      ModPorter uses <a href="http://httpd.apache.org/apreq">libapreq</a> for parsing the multipart request.
       <ul>
-        <li>Download libapreq 2.10 RC1 from <a href="http://people.apache.org/~bojan/libapreq2-2.10-RC1.tar.gz">here</a>.</li>
+        <li><a href="http://httpd.apache.org/apreq/download.cgi">Download</a> libapreq2 2.12 from <a href="http://mirrors.enquira.co.uk/apache/httpd/libapreq/libapreq2-2.12.tar.gz">here</a>.</li>
         <li>Install the C API :
           <pre>
             <code>
   % ./configure --with-apache2-apxs=/path/to/apache2/bin/apxs
   % make
   % make test
-  % make install
+  % sudo make install
+            </code>
+          </pre>
+        </li>
+        <li>Load the mod_apreq2 module from your Apache's configuration file :
+          <pre>
+            <code>
+  LoadModule apreq_module modules/mod_apreq2.so
             </code>
           </pre>
         </li>
@@ -52,7 +59,7 @@
 
       <h4>2. Install ModPorter</h4>
       <ul>
-        <li>Download the latest version of ModPorter from <a href="">here</a>.</li>
+        <li>Get the latest version of ModPorter from <a href="http://github.com/actionrails/modporter/tree/master">GitHub</a>.</li>
         <li>Install using the rake command :
           <pre>
             <code>
@@ -60,21 +67,48 @@
             </code>
           </pre>
         </li>
-        <li><a href="configure.html">Configure</a> ModPorter.</li>
-      </ul>
-
-      <h4>3. Install the Rails Plugin - acts_as_porter ( optional )</h4>
-      This step applies only if you wish to use ModPorter with a Rails application.
-      <ul>
-        <li>Install using the plugin using script/plugin inside your Rails application :
+        <li>Load the porter_module module from your Apache's configure file :
           <pre>
             <code>
-  % script/plugin install git://acts_as_porter.git
+  LoadModule porter_module modules/mod_porter.so
             </code>
           </pre>
         </li>
+
+        <li><a href="configure.html">Configure</a> ModPorter to your needs. ModPorter enabled VirtualHost should look something like :
+          <pre> 
+            <code>
+  &lt;VirtualHost *:8080&gt;
+    ServerName localhost
+    DocumentRoot /Users/actionrails/application/current/public
+
+    Porter On
+    PorterSharedSecret secret
+  &lt;/VirtualHost&gt;
+            </code>
+          </pre>  
+        </li>
       </ul>
-      
+
+      <h4>3. Install the Rails Plugin - modporter-plugin ( optional )</h4>
+      This step applies only if you wish to use ModPorter with a Rails application.
+      <ul>
+        <li>Install using the ModPorter Rails plugin :
+          <pre>
+            <code>
+  % script/plugin install git://github.com/actionrails/modporter-plugin.git
+            </code>
+          </pre>
+        </li>
+        <li>Configure the plugin by providing the shared secret in application.rb :
+          <pre>
+            <code>
+  class ApplicationController < ActionController::Base
+    self.mod_porter_secret = "secret"
+  end
+            </code>
+          </pre>
+      </ul>
     </div>
   </div>
 
