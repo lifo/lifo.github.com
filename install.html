@@ -38,7 +38,15 @@
       ModPorter uses <a href="http://httpd.apache.org/apreq">libapreq</a> for parsing the multipart request.
       <ul>
         <li><a href="http://httpd.apache.org/apreq/download.cgi">Download</a> libapreq2 2.12 from <a href="http://mirrors.enquira.co.uk/apache/httpd/libapreq/libapreq2-2.12.tar.gz">here</a>.</li>
-        <li>Install the C API :
+        <li>Install the C API :<br /><br />
+          If you're on <b>OS X</b>, you may need to run the following first :
+          <pre>
+            <code>
+  % export CFLAGS="-arch x86_64"
+  % export ARCHFLAGS="-arch x86_64"
+            </code>
+          </pre>
+          Now :
           <pre>
             <code>
   % ./configure --with-apache2-apxs=/path/to/apache2/bin/apxs
@@ -63,6 +71,12 @@
           <pre>
             <code>
   % rake
+            </code>
+          </pre>
+          If the above fails on OS X :
+          <pre>
+            <code>
+  % sudo rake build_mac
             </code>
           </pre>
         </li>
